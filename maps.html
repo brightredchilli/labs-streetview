@@ -7,18 +7,33 @@
       body { height: 100%; margin: 0; padding: 0 }
       #map_canvas { height: 100% }
     </style>
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?sensor=false">
-      </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="./jquery-min.js"></script>
+    <script type="text/javascript" src="./models.js"></script>
       <script type="text/javascript">
 
         function getCustomPanoramaTileUrl(pano, zoom, tileX, tileY) {
-          return "./images/labs_000-000.JPG";
+          /*
+          if (pano == "labs") {
+            return "./images/labs_000-001.JPG";
+          } else {
+            return "./images/labs_000-000.JPG";
+          }
+          */
+          return getPanoModelForId(pano).url;
         }
 
+        function defaultLink() {
+          return {
+            description: "",
+            heading: 0,
+            pano: "default",
+            roadColor: "white",
+            roadOpacity: 0.3
+          };
+        }
         function defaultPanoTile() {
           return {
-
             location:
             {
               pano: "default",
@@ -30,47 +45,58 @@
             {
               tileSize: new google.maps.Size(4096, 1924),
               worldSize: new google.maps.Size(4096, 1924),
-              centerHeading: "Intrepid Labs 2012",
+              centerHeading: 60,
               getTileUrl: getCustomPanoramaTileUrl
             },
+            links: []
           }
 
         }
 
+        function linkWithId(pano_id, heading) {
+          var link = defaultLink();
+          link.pano = pano_id;
+          if (heading !== undefined) {
+            link.heading = heading;
+          }
+          return link;
+          
+        }
+
         function getCustomPanorama(pano, zoom, tileX, tileY) {
-          return defaultPanoTile();
+          var panoTile = defaultPanoTile();
+          panoTile.location.pano = pano;
+          switch (pano) {
+            case "001":
+              panoTile.links.push(linkWithId("002"));
+              break;
+            case "002":
+              panoTile.links.push(linkWithId("001", 180));
+              panoTile.links.push(linkWithId("003"));
+              break;
+            case "003":
+              panoTile.links.push(linkWithId("002", 180));
+              panoTile.links.push(linkWithId("004", 90));
+              break;
+            case "004":
+              panoTile.links.push(linkWithId("003", 270));
+              panoTile.links.push(linkWithId("005", 45));
+              break;
+            case "005":
+              panoTile.links.push(linkWithId("004", 225));
+              break;
+          }
+          return panoTile;
         }
 
         function initialize() {
-          //var sydney = new google.maps.LatLng(-34.397, 150.644);
-          var sydney = new google.maps.LatLng(42.345573,-71.098326);
-          var mapOptions = {
-          center: sydney,
-          zoom: 8,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
-          /*
-          var map = new google.maps.Map(document.getElementById("map_canvas"),
-              mapOptions);
-          */
-          var panoramaOptions = {
-            position: sydney,
-            pov: {
-              heading: 34,
-              pitch:10,
-              zoom: 1
-            }
-          };
-
           var customPanoOpts = 
           {
-            pano: "labs",
+            pano: "001",
             visible: true,
             panoProvider: getCustomPanorama
           }
           var panorama = new google.maps.StreetViewPanorama(document.getElementById("pano"), customPanoOpts);
-          //map.setStreetView(panorama);
-          
         }
       </script>
     </head>
