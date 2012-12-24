@@ -1,0 +1,42 @@
+ <!DOCTYPE html>
+ <html>
+   <head>
+     <title>Hello Web - Processing.js Test</title>
+     <script src="processing-min.js"></script>
+     <script type="text/processing" data-processing-target="processing-canvas">
+       /* @pjs preload="./intrepid-floorplan.png"; */
+       void setup() {
+         int xSize = 1592, ySize = 860;
+         size(xSize, ySize);
+         PImage backgroundImg = loadImage("./intrepid-floorplan.png");
+         background(backgroundImg);
+
+         //need to draw some guide lines. lets determine how many guidelines might be appropriate
+         int tileSize = 50;
+         int xLines = (int)(xSize / tileSize);
+         int yLines = (int)(ySize / tileSize);
+
+
+
+         
+         stroke(100, 100, 233, 100);
+         for (int i = 0; i < xLines; i++) {
+           int xPos = i*tileSize;
+           line(xPos, 0, xPos, ySize);
+         }
+
+         for (int i = 0; i < yLines; i++) {
+           int yPos = i*tileSize;
+           line(0, yPos, xSize, yPos);
+         }
+       }
+
+
+     </script>
+   </head>
+   <body>
+     <h1>Processing.js Test</h1>
+     <p>This is my first Processing.js web-based sketch:</p>
+     <canvas id="processing-canvas"></canvas>
+   </body>
+ </html>
