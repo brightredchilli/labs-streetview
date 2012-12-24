@@ -1,7 +1,7 @@
  <!DOCTYPE html>
  <html>
    <head>
-     <title>Hello Web - Processing.js Test</title>
+     <title>Intrepid Labs Floorplan</title>
      <script src="processing-min.js"></script>
      <script type="text/processing" data-processing-target="processing-canvas">
        /* @pjs preload="./intrepid-floorplan.png"; */
@@ -11,23 +11,40 @@
          PImage backgroundImg = loadImage("./intrepid-floorplan.png");
          background(backgroundImg);
 
+         //cheat way of applying transparency to background, javascript crashes on tint()
+         pushStyle();
+         fill(255, 128);
+         rect(0, 0, xSize, ySize);
+         popStyle();
+
+
+
          //need to draw some guide lines. lets determine how many guidelines might be appropriate
-         int tileSize = 50;
+         int tileSize = 40;
          int xLines = (int)(xSize / tileSize);
          int yLines = (int)(ySize / tileSize);
 
-
-
-         
          stroke(100, 100, 233, 100);
          for (int i = 0; i < xLines; i++) {
            int xPos = i*tileSize;
            line(xPos, 0, xPos, ySize);
          }
-
          for (int i = 0; i < yLines; i++) {
            int yPos = i*tileSize;
            line(0, yPos, xSize, yPos);
+         }
+
+
+         //using the same params, lets draw some guide numbers to make data collection easier.
+         textFont(loadFont("sans-serif"), 10);
+         fill(255, 10, 10);
+         for (int i = 0; i < xLines; i++) {
+           for (int j = 0; j < yLines; j++) {
+             int xPos = i*tileSize;
+             int yPos = j*tileSize;
+             //ellipse(xPos, yPos, 10, 10)
+             text("(" + i + ", " + j + ")", xPos, yPos+10); 
+           }
          }
        }
 
@@ -35,8 +52,8 @@
      </script>
    </head>
    <body>
-     <h1>Processing.js Test</h1>
-     <p>This is my first Processing.js web-based sketch:</p>
+     <h1>Intrepid Labs floorplan</h1>
+     <p>Use this document to help us take panoramas for custom Google Street View</p>
      <canvas id="processing-canvas"></canvas>
    </body>
  </html>
