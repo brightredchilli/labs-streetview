@@ -1,22 +1,22 @@
 {
   "001" : {
     "id" : "001",
-      "url" : "./images/001"
+      "url" : "./images/001.JPG"
   },
     "002" : {
       "id" : "002",
-      "url" : "./images/002"
+      "url" : "./images/002.JPG"
     },
     "003" : {
       "id" : "003",
-      "url" : "./images/003"
+      "url" : "./images/003.JPG"
     },
     "004" : {
       "id" : "004",
-      "url" : "./images/004"
+      "url" : "./images/004.JPG"
     },
     "005" : {
       "id" : "005",
-      "url" : "./images/005"
+      "url" : "./images/005.JPG"
     }
 }
