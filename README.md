@@ -9,8 +9,11 @@ The street view API(as of January 2013)a can be found here : https://developers.
 
 It is well documented and very easy to use. For those of you who are confused, like I was, you need to link to their API dynamically like so:
 
-```
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+```html
+    <head>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>    
+        ... 
+    </head>
 ```
 
 
